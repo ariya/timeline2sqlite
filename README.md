@@ -10,9 +10,9 @@ To install the necessary dependencies, run `npm install`.
 
 Grab your location history from [Google Takeout](https://takeout.google.com) and unzip the file. Find those per-month timeline JSON files tucked away in `Location History/Semantic Location History/`.
 
-Run the script on a file like this:
+Run the script on one or more files:
 ```bash
-npm run timeline2sqlite 2023_FEBRUARY.json
+npm run timeline2sqlite 2023_MAY.json 2023_JUNE.json
 ```
 
 This will generate a database named `places.sqlite`, overwriting it if it already exists. Open this file using the [sqlite CLI](https://sqlite.org/cli.html), [Datasette](https://datasette.io), or any other database management tool.

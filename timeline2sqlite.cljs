@@ -10,6 +10,12 @@
 
 (defn timeline->placevisits [timeline] (->> timeline (filterv :placeVisit) (map :placeVisit)))
 
+(defn get-location [file-content]
+  (->> file-content
+       extract-timeline
+       timeline->placevisits
+       (map :location)))
+
 (defn normalize-coord [coord] (/ (js/parseInt coord) 1e7))
 
 (defn location->place [location] {:id (:placeId location)
@@ -32,11 +38,13 @@
     (doseq [place places] (insert-place-to-db db place))
     db))
 
-(defn convert [filename]
-  (->> (read-file filename)
-       extract-timeline
-       timeline->placevisits
-       (map :location)
+
+(defn convert [filenames]
+  (->> filenames
+       (map read-file)
+       (map get-location)
+       concat
+       flatten
        (map location->place)
        (places->db)
        (export-db "places.sqlite")))
@@ -45,7 +53,7 @@
 
 (defn main [args]
   (if (pos? (count args))
-    (convert (first args))
-    (js/console.error "Usage: timeline2sqlite somefile.json")))
+    (convert args)
+    (js/console.error "Usage: timeline2sqlite somefile.json [anotherfile.json]")))
 
 (main cli-args)
