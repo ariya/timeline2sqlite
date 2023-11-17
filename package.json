@@ -1,0 +1,17 @@
+{
+  "name": "timeline2sqlite",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "nbb": "nbb",
+    "timeline2sqlite": "npm run nbb timeline2sqlite.cljs",
+    "nrepl": "nbb nrepl-server :port 9000"
+  },
+  "devDependencies": {
+    "nbb": "~1.2.179"
+  },
+  "dependencies": {
+    "sql.js": "~0.5.0"
+  }
+}
